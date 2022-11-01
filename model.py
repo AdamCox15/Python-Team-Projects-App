@@ -17,6 +17,14 @@ class User(db.Model):
     username = db.Column(db.String(255), unique = True, nullable = False)
     password = db.Column(db.String(255), nullable = False)
 
+class Team(db.Model):
+
+    __tablename__ = "teams"
+
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    team_name = db.Column(db.String(255), unique = True, nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+
 class Project(db.Model):
 
     __tablename__ = "projects"
