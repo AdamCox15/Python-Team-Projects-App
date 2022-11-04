@@ -11,6 +11,12 @@
       <td>{{ project.description }}</td>
       <td>{{ project.completed }}</td>
       <td>{{ project.team.team_name }}</td>
+      <td>
+        <a href="{{ url_for('update_project', project_id = project.id) }}">
+          <button type="button" class="btn btn-primary">Update</button>
+        </a>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </td>
     </tr>
     {% endfor %}
   </table>

@@ -58,6 +58,27 @@ def add_project():
     else:
         return redirect(url_for("home"))
 
+@app.route("/update-project/<project_id>", methods=["GET", "POST"])
+def update_project(project_id):
+    form = ProjectForm()
+    form.update_teams(User.query.get(user_id).teams)
+    project = Project.query.get(project_id)
+
+    if request.method == "POST":
+        if form.validate_on_submit():
+            project.project_name = form.project_name.data
+            if len(form.description.data) > 0:
+                project.description = form.description.data
+            project.completed = form.completed.data
+            project.team_id = form.team_selection.data
+            db.session.add(project)
+            db.session.commit()
+            return redirect(url_for("projects"))
+        else:
+            return redirect(url_for("home"))   
+    else:
+        return render_template("update-project.html", title = f"Update {project.project_name}", page = "projects", project = project, form = form)
+
 
 if __name__=="__main__":
     connect_to_db(app)
