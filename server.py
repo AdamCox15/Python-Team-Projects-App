@@ -15,6 +15,18 @@ def home():
     project_form.update_teams(User.query.get(user_id).teams)
     return render_template("home.html", team_form = team_form, project_form = project_form)
 
+@app.route("/teams")
+def teams():
+    user = User.query.get(user_id)
+    return render_template("teams.html", title = "Teams", teams = user.teams)
+
+@app.route("/projects")
+def projects():
+    user = User.query.get(user_id)
+    projects = user.get_all_projects()
+    return render_template("projects.html", title = "Projects", page = "projects", projects = projects)
+
+
 @app.route("/add-team", methods = ["POST"])
 def add_team():
     team_form = TeamForm()
